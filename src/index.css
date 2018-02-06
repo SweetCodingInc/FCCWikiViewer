@@ -1,5 +1,26 @@
-body {
+html, body {
   margin: 0;
   padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
   font-family: sans-serif;
+}
+
+.f{
+  display: flex;
+  flex: 1;
+}
+
+.r{
+  flex-direction: row;
+}
+
+.c{
+  flex-direction: column;
+}
+
+.full{
+  width: 100%;
+  height: 100%;
 }

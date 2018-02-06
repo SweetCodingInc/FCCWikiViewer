@@ -1,16 +1,21 @@
-import React, { Component } from 'react';
-import { Header } from './components/app-bar.component';
-import { ContentComponent } from './components/content.component';
+import './App.css';
+import React from 'react';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <Header />
-        <ContentComponent/>
+
+import { Sidebar } from './components/sidebar.component';
+import { Viewer } from './components/viewer.component';
+
+const App = () => {
+  return (
+    <div className="f r">
+      <div className="side">
+        <Sidebar />
       </div>
-    );
-  }
+      <div className="f r">
+        <Viewer />
+      </div>
+    </div>
+  );
 }
 
 export default App;
