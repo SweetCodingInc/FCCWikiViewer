@@ -6,5 +6,5 @@ const url = q => `https://en.wikipedia.org/w/api.php?format=json&action=query&ge
 
 export function fetchResult(searchTerm) {
     return Observable.fromPromise(get(url(searchTerm)))
-        .map(response => values(response.data.query.pages));
+        .map(response => response.data.query ? values(response.data.query.pages) : []);
 }
