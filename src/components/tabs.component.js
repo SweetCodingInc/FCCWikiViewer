@@ -11,46 +11,55 @@ class TabsComponent extends Component {
         super(props);
         this.toggle = this.toggle.bind(this);
         this.state = {
-            activeTab: 0
+            activeTab: {}
         };
     }
 
     toggle(tab) {
-        if (this.state.activeTab !== tab) {
+        if (this.state.activeTab.pageid !== tab.pageid) {
             this.setState({
                 activeTab: tab
             });
         }
     }
 
-    componentWillReceiveProps(props) {
-        console.log(props);
+    componentDidMount() {
         this.setState({
-            activeTab: 0
-        });
+            activeTab: this.props.selection[0]
+        })
+    }
+
+    componentWillReceiveProps(props) {
+        const currentTab = this.state.activeTab.pageid;
+        const isAvailable = props.selection.find(s => s.pageid === currentTab);
+        if (!isAvailable) {
+            this.setState({
+                activeTab: props.selection[props.selection.length - 1]
+            });
+        }
     }
 
     render() {
         return (
             <div className="f c">
                 <Nav tabs>
-                    {this.props.selection.map((s, i) => {
-                        return (<NavItem key={i}>
+                    {this.props.selection.map(s => {
+                        return (<NavItem key={s.pageid}>
                             <NavLink
-                                className={classnames({ active: this.state.activeTab === i })}
-                                onClick={() => { this.toggle(i); }}>
-                                <span className="close" onClick={this.props.unselect.bind(null, s)}>X</span>
-                                {this.props.results.find(r => r.pageid === s)['title']}
+                                className={classnames({ active: this.state.activeTab.pageid === s.pageid })}
+                                onClick={() => { this.toggle(s); }}>
+                                <span className="close" onClick={(e) => {e.stopPropagation();this.props.unselect(s)}}>X</span>
+                                {s.title}
                             </NavLink>
                         </NavItem>)
                     })}
                 </Nav>
-                <TabContent activeTab={this.state.activeTab} className="f restrict">
-                    {this.props.selection.map((s, i) => {
+                <TabContent activeTab={this.state.activeTab.pageid} className="f restrict">
+                    {this.props.selection.map(s => {
                         return (
-                            <TabPane className="f" tabId={i} key={i}>
+                            <TabPane className="f" tabId={s.pageid} key={s.pageid}>
                                 <Iframe
-                                    url={'https://en.wikipedia.org/?curid=' + s}
+                                    url={'https://en.wikipedia.org/?curid=' + s.pageid}
                                     display="flex"
                                     position="relative"
                                 />
@@ -72,7 +81,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        unselect: pageId => dispatch(UnselectResultAction(pageId))
+        unselect: result => dispatch(UnselectResultAction(result))
     };
 }
 

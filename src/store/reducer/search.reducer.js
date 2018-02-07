@@ -14,7 +14,7 @@ export function SearchReducer(
         case SEARCH_ACTION_CONSTANTS.SELECT_RESULT:
             return { ...state, selection: state.selection.includes(action.payload) ? state.selection : state.selection.concat(action.payload) };
         case SEARCH_ACTION_CONSTANTS.UNSELECT_RESULT:
-            return { ...state, selection: state.selection.filter(s => s !== action.payload)};
+            return { ...state, selection: state.selection.filter(s => s.pageid !== action.payload.pageid)};
         default:
             return { ...state };
     }

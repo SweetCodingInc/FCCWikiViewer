@@ -19,7 +19,7 @@ const ResultList = (props) => {
             {results.length > 0 &&
                 <ListGroup>
                     {
-                        results.map((result, i) => <ListGroupItem key={i} tag="a" href="#" onClick={cb.bind(null, result.pageid)}>{result.title}</ListGroupItem>)
+                        results.map((result, i) => <ListGroupItem key={i} tag="a" href="#" onClick={cb.bind(null, result)}>{result.title}</ListGroupItem>)
                     }
                 </ListGroup>
             }

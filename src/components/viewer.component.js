@@ -22,7 +22,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        unselect: pageId => dispatch(UnselectResultAction(pageId))
+        unselect: result => dispatch(UnselectResultAction(result))
     }
 }
 
